@@ -1,5 +1,6 @@
 package dev.brampie.myandroidapplication.data
 
+import android.content.Context
 import android.util.Log
 import androidx.work.Constraints
 import androidx.work.NetworkType
@@ -25,7 +26,8 @@ interface AppRepository {
 
 class CachingAppRepository(
     private val apiService: ApiService,
-    private val newsArticleDao: NewsarticleDao
+    private val newsArticleDao: NewsarticleDao,
+    context: Context
 ) : AppRepository {
     override fun getNewsArticles(): Flow<List<Newsarticle>> {
         return newsArticleDao.getAllNewsarticles().map {

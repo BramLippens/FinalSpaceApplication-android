@@ -11,6 +11,6 @@ interface NewsarticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNewsarticle(newsArticles: DbNewsarticle)
 
-    @Query("SELECT * FROM DbNewsarticle")
+    @Query("SELECT * FROM newsarticles")
     fun getAllNewsarticles(): Flow<List<DbNewsarticle>>
 }
