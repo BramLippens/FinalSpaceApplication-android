@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyAndroidApplication</string>
+    <string name="app_name">NewsApp</string>
     <string name="go_to_news">news</string>
     <string name="go_to_home">Home</string>
 </resources>

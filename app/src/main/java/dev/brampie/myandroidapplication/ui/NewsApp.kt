@@ -13,37 +13,31 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.brampie.myandroidapplication.R
+import dev.brampie.myandroidapplication.ui.components.NewsAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsApp(
     navigationType: NewsNavigationType
 ){
-when(navigationType){
+    val currentScreenTitle = stringResource(R.string.go_to_home)
 
+    when(navigationType){
         NewsNavigationType.BOTTOM_NAVIGATION -> {
             var presses by remember { mutableIntStateOf(0) }
             Scaffold(
                 topBar = {
-                    TopAppBar(
-                        colors = topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            titleContentColor = MaterialTheme.colorScheme.primary,
-                        ),
-                        title = {
-                            Text("Top app bar")
-                        }
-                    )
+                    NewsAppBar(currentScreentitle = currentScreenTitle)
                 },
                 bottomBar = {
                     BottomAppBar(
@@ -80,14 +74,14 @@ when(navigationType){
                     You have pressed the floating action button $presses times.
                 """.trimIndent(),
                     )
-                }
             }
         }
-        NewsNavigationType.NAVIGATION_RAIL -> {
-            Text(text = "Navigation Rail")
-        }
-        NewsNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
-            Text(text = "Permanent Navigation Drawer")
-        }
     }
+            NewsNavigationType.NAVIGATION_RAIL -> {
+                Text(text = "Navigation Rail")
+            }
+            NewsNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+                Text(text = "Permanent Navigation Drawer")
+            }
+        }
 }
