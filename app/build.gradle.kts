@@ -59,6 +59,7 @@ dependencies {
 
     //extra icons
     implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
 
     //room
     val room_version = "2.5.0"
