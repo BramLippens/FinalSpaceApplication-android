@@ -13,6 +13,8 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import dev.brampie.myandroidapplication.ui.NewsApp
+import dev.brampie.myandroidapplication.ui.NewsNavigationType
 import dev.brampie.myandroidapplication.ui.theme.MyAndroidApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,13 +31,13 @@ class MainActivity : ComponentActivity() {
 
                     when(windowSize.widthSizeClass){
                         WindowWidthSizeClass.Compact -> {
-                            Text(text = "XSmall")
+                            NewsApp(navigationType = NewsNavigationType.BOTTOM_NAVIGATION)
                         }
                         WindowWidthSizeClass.Medium -> {
-                            Text(text = "Medium")
+                            NewsApp(navigationType = NewsNavigationType.NAVIGATION_RAIL)
                         }
                         WindowWidthSizeClass.Expanded -> {
-                            Text(text = "large")
+                            NewsApp(navigationType = NewsNavigationType.PERMANENT_NAVIGATION_DRAWER)
                         }
                     }
                 }
