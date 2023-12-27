@@ -13,7 +13,7 @@ interface AppContainer {
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
-    private val BASE_URL = "https://applicatie.8n4ahl8ntuh6k.eu-west-3.cs.amazonlightsail.com/api/"
+    private val BASE_URL = "https://newsapi.org/v2/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(Json { ignoreUnknownKeys = true }
