@@ -19,7 +19,7 @@ object NewsarticleSampler{
     val getAll: () -> MutableList<Newsarticle> = {
         val list = mutableListOf<Newsarticle>()
         for(item in sampleNewsarticles) {
-            list.add(Newsarticle("Google",item, if (Random.nextInt(0, 2) == 0) { "lorem ipsum dolor sit" } else "consectetur adipiscing elit"))
+            list.add(Newsarticle("Google",item, "https://picsum.photos/200/300?random=${Random.nextInt(0, 100)}", "2021-09-01"))
         }
         list
     }

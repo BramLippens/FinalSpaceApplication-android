@@ -58,6 +58,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
+    //Image Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     //extra icons
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.2")

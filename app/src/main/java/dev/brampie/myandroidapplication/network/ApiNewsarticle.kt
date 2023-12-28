@@ -4,12 +4,14 @@ import dev.brampie.myandroidapplication.model.newsarticle.Newsarticle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
+import kotlin.random.Random
 
 @Serializable
 data class ApiNewsarticle (
     val author: String? = null,
     val title: String,
     val urlToImage: String? = null,
+    val publishedAt: String? = null
 )
 
 @Serializable
@@ -25,10 +27,11 @@ fun Flow<ApiNewsarticleResponse>.asDomainObjects(): Flow<List<Newsarticle>> {
 fun ApiNewsarticleResponse.asDomainObjects(): List<Newsarticle> {
     return articles.map {
         Newsarticle(
-            sourceName = it.author?:"" ,
+            author = it.author?:"Unknown",
             title = it.title,
             //TODO: add default image
-            image = it.urlToImage?:""
+            image = it.urlToImage?:"https://picsum.photos/200/300?random=${Random.nextInt(0, 100)}",
+            publishedAt = it.publishedAt?:"Unknown"
         )
     }
 }

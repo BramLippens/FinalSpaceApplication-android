@@ -53,11 +53,15 @@ class NewsOverviewViewModel(private val appRepository: AppRepository) : ViewMode
     }
 
     companion object{
+        private var Instance: NewsOverviewViewModel? = null
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val application = (this[APPLICATION_KEY] as NewsApplication)
-                val appRepository = application.container.appRepository
-                NewsOverviewViewModel(appRepository)
+                if(Instance == null){
+                    val application = (this[APPLICATION_KEY] as NewsApplication)
+                    val appRepository = application.container.appRepository
+                    Instance = NewsOverviewViewModel(appRepository)
+                }
+                Instance!!
             }
         }
     }

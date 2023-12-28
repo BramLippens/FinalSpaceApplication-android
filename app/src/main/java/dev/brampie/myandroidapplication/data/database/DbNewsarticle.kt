@@ -7,24 +7,27 @@ import java.util.UUID
 
 @Entity(tableName = "newsarticles")
 data class DbNewsarticle(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val sourceName: String,
+    @PrimaryKey(autoGenerate = false)
+    val id: UUID,
+    val author: String,
     val title: String,
-    val image: String
+    val image: String,
+    val publishedAt: String
 )
 fun DbNewsarticle.asDomainNewsarticle() : Newsarticle = Newsarticle(
-    sourceName = sourceName,
+    author = author,
     title = title,
-    image = image
+    image = image,
+    publishedAt = publishedAt
 )
 
 fun Newsarticle.asDbNewsarticle() : DbNewsarticle = DbNewsarticle(
     //TODO: Fix this
-    id = UUID.randomUUID().hashCode(),
-    sourceName = sourceName,
+    id = UUID.randomUUID(),
+    author = author,
     title = title,
-    image = image
+    image = image,
+    publishedAt = publishedAt
 )
 
 
