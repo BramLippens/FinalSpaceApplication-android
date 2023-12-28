@@ -60,6 +60,8 @@ dependencies {
     //extra icons
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
 
     //room
     val room_version = "2.5.0"
