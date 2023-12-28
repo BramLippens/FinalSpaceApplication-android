@@ -40,7 +40,7 @@ class NewsOverviewViewModel(private val appRepository: AppRepository) : ViewMode
     fun getApiNews(){
         try{
             viewModelScope.launch {appRepository.refresh()}
-            uiNewsListState = appRepository.getNewsArticles().map { NewsListState(it) }
+            uiNewsListState = appRepository.getNewsarticles().map { NewsListState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),

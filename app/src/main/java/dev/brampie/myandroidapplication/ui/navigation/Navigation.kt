@@ -12,6 +12,7 @@ fun navComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    //TODO: navController cant be passed
     NavHost(
         navController = navController,
         startDestination = NewsOverviewScreen.Start.name,

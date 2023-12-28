@@ -46,6 +46,7 @@ fun NewsApp(
                     NavigationBar(onHome = goHome, onNews = goSearch)
                 }
             ) { innerPadding ->
+                //TODO: navController cant be passed
                 navComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding)

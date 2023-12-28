@@ -8,6 +8,7 @@ import dev.brampie.myandroidapplication.network.NetworkConnectionInterceptor
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 interface AppContainer {
@@ -16,8 +17,12 @@ interface AppContainer {
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
     private val networkCheck = NetworkConnectionInterceptor(context)
+    val logging = HttpLoggingInterceptor().apply {
+        setLevel(HttpLoggingInterceptor.Level.BASIC)
+    }
 
     private val client = OkHttpClient.Builder()
+        .addInterceptor(logging)
         .addInterceptor(networkCheck)
         .build()
 

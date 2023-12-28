@@ -7,29 +7,28 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ApiNewsarticle (
-    val sourceName: String,
+    val author: String? = null,
     val title: String,
-    val image: String,
+    val urlToImage: String? = null,
 )
 
 @Serializable
 data class ApiNewsarticleResponse(
-    val articles: List<Newsarticle>
+    val articles: List<ApiNewsarticle>
 )
 
 
 fun Flow<ApiNewsarticleResponse>.asDomainObjects(): Flow<List<Newsarticle>> {
-    return map {
-        it.asDomainObjects()
-    }
+    return map { it.asDomainObjects() }
 }
 
 fun ApiNewsarticleResponse.asDomainObjects(): List<Newsarticle> {
     return articles.map {
         Newsarticle(
-            sourceName = it.sourceName,
+            sourceName = it.author?:"" ,
             title = it.title,
-            image = it.image
+            //TODO: add default image
+            image = it.urlToImage?:""
         )
     }
 }
