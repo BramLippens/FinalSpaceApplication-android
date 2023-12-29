@@ -11,6 +11,8 @@ data class ApiNewsarticle (
     val author: String? = null,
     val title: String,
     val urlToImage: String? = null,
+    val description: String? = null,
+    val content : String? = null,
     val publishedAt: String? = null
 )
 
@@ -18,7 +20,6 @@ data class ApiNewsarticle (
 data class ApiNewsarticleResponse(
     val articles: List<ApiNewsarticle>
 )
-
 
 fun Flow<ApiNewsarticleResponse>.asDomainObjects(): Flow<List<Newsarticle>> {
     return map { it.asDomainObjects() }
@@ -29,8 +30,9 @@ fun ApiNewsarticleResponse.asDomainObjects(): List<Newsarticle> {
         Newsarticle(
             author = it.author?:"Unknown",
             title = it.title,
-            //TODO: add default image
             image = it.urlToImage?:"https://picsum.photos/200/300?random=${Random.nextInt(0, 100)}",
+            description = it.description?:"Empty",
+            content = it.content?:"Empty",
             publishedAt = it.publishedAt?:"Unknown"
         )
     }

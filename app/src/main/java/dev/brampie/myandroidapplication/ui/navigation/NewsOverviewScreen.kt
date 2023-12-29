@@ -12,4 +12,5 @@ enum class NewsOverviewScreen(
 ){
     Start(title = R.string.go_to_home, icon = Icons.Filled.Home),
     Search(title = R.string.go_to_search, icon = Icons.Filled.Search),
+
 }
