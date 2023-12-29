@@ -50,7 +50,6 @@ fun NewsApp(
                     NavigationBar(onHome = goHome, onNews = goSearch)
                 }
             ) { innerPadding ->
-                //TODO: navController cant be passed
                 NavHost(
                     navController = navController,
                     startDestination = NewsOverviewScreen.Start.name,

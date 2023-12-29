@@ -38,11 +38,12 @@ class CachingAppRepository(
     override fun getNewsarticles(): Flow<List<Newsarticle>> {
         return newsArticleDao.getAllNewsarticles().map {
             it.asDomainNewsarticles()
-        }.onEach {
-            if (it.isEmpty()) {
-                refresh()
-            }
         }
+//            .onEach {
+//            if (it.isEmpty()) {
+//                refresh()
+//            }
+//        }
     }
 
     override suspend fun insertNewsarticle(newsarticle: Newsarticle) {
