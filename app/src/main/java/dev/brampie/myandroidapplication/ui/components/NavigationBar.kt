@@ -3,6 +3,8 @@ package dev.brampie.myandroidapplication.ui.components
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -17,25 +19,24 @@ import dev.brampie.myandroidapplication.R
 fun NavigationBar(
     onHome: () -> Unit,
     onLocation: () -> Unit,
+    currentBackStackEntry: String?,
 ) {
-    val context = LocalContext.current
-
     BottomAppBar {
         NavigationBarItem(
-            selected = true,
+            selected = currentBackStackEntry == Destinations.Characters.name,
             onClick = onHome,
             icon = {
                 Icon(
-                    imageVector = Icons.Filled.Home,
+                    imageVector = Icons.Filled.Person,
                     contentDescription = stringResource(R.string.go_to_home)
                 )
             })
         NavigationBarItem(
-            selected = false,
+            selected = currentBackStackEntry == Destinations.Locations.name,
             onClick = onLocation,
             icon = {
                 Icon(
-                    imageVector = Icons.Filled.Article,
+                    imageVector = Icons.Filled.LocationOn,
                     contentDescription = stringResource(R.string.go_to_characters)
                 )
             })

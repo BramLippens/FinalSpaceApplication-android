@@ -13,13 +13,8 @@ data class ApiLocation(
     val img_url: String
 )
 
-@Serializable
-data class ApiLocationResponse(
-    val results: List<ApiLocation>
-)
-
-fun ApiLocationResponse.asDomainObjects(): List<Location> {
-    return results.map {
+fun List<ApiLocation>.asDomainObjects(): List<Location> {
+    return map {
         Location(
             externalId = it.id,
             name = it.name,
@@ -29,6 +24,6 @@ fun ApiLocationResponse.asDomainObjects(): List<Location> {
     }
 }
 
-fun Flow<ApiLocationResponse>.asDomainObjects(): Flow<List<Location>> {
+fun Flow<List<ApiLocation>>.asDomainObjects(): Flow<List<Location>> {
     return map { it.asDomainObjects() }
 }
