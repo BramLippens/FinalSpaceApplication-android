@@ -4,15 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import dev.brampie.myandroidapplication.data.database.character.CharacterDao
+import dev.brampie.myandroidapplication.data.database.character.DbCharacter
+import dev.brampie.myandroidapplication.data.database.location.DbLocation
+import dev.brampie.myandroidapplication.data.database.location.LocationDao
 
 
 @Database(
-    entities = [DbNewsarticle::class],
-    version = 4,
+    entities = [DbCharacter::class, DbLocation::class],
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun newsArticleDao(): NewsarticleDao
+    abstract fun characterDao(): CharacterDao
+    abstract fun locationDao(): LocationDao
 
     companion object {
         @Volatile

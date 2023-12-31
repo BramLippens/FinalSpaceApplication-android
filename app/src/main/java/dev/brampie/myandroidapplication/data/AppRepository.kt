@@ -2,82 +2,89 @@ package dev.brampie.myandroidapplication.data
 
 import android.content.Context
 import android.util.Log
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import dev.brampie.myandroidapplication.data.database.NewsarticleDao
-import dev.brampie.myandroidapplication.data.database.asDbNewsarticle
-import dev.brampie.myandroidapplication.data.database.asDomainNewsarticles
-import dev.brampie.myandroidapplication.model.newsarticle.Newsarticle
+import dev.brampie.myandroidapplication.data.database.character.CharacterDao
+import dev.brampie.myandroidapplication.data.database.character.asDbCharacter
+import dev.brampie.myandroidapplication.data.database.character.asDomainCharacters
+import dev.brampie.myandroidapplication.data.database.location.LocationDao
+import dev.brampie.myandroidapplication.data.database.location.asDbLocation
+import dev.brampie.myandroidapplication.data.database.location.asDomainLocations
+import dev.brampie.myandroidapplication.model.character.Character
+import dev.brampie.myandroidapplication.model.location.Location
 import dev.brampie.myandroidapplication.network.ApiService
-import dev.brampie.myandroidapplication.network.asDomainObjects
-import dev.brampie.myandroidapplication.network.getNewsAsFlow
+import dev.brampie.myandroidapplication.network.character.asDomainObjects
+import dev.brampie.myandroidapplication.network.getCharactersAsFlow
+import dev.brampie.myandroidapplication.network.getLocationsAsFlow
+import dev.brampie.myandroidapplication.network.location.asDomainObjects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
-import java.util.UUID
 
 interface AppRepository {
-    fun getNewsarticles(): Flow<List<Newsarticle>>
+    fun getCharacters(): Flow<List<Character>>
+    fun getLocations(): Flow<List<Location>>
 
-    suspend fun insertNewsarticle(newsarticle: Newsarticle)
+    suspend fun insertCharacter(character: Character)
+    suspend fun insertLocation(location: Location)
 
-    suspend fun refresh()
-
-    var wifiWorkInfo: Flow<WorkInfo>
+    suspend fun refreshCharacters()
+    suspend fun refreshLocations()
 }
 
 class CachingAppRepository(
     private val apiService: ApiService,
-    private val newsArticleDao: NewsarticleDao,
+    private val characterDao: CharacterDao,
+    private val locationDao: LocationDao,
     context: Context
 ) : AppRepository {
-    override fun getNewsarticles(): Flow<List<Newsarticle>> {
-        return newsArticleDao.getAllNewsarticles().map {
-            it.asDomainNewsarticles()
+    override fun getCharacters(): Flow<List<Character>> {
+        return characterDao.getAllCharacters().map {
+            it.asDomainCharacters()
         }
-//            .onEach {
-//            if (it.isEmpty()) {
-//                refresh()
-//            }
-//        }
     }
 
-    override suspend fun insertNewsarticle(newsarticle: Newsarticle) {
-        newsArticleDao.insertNewsarticle(newsarticle.asDbNewsarticle())
+    override fun getLocations(): Flow<List<Location>> {
+        return locationDao.getAllLocations().map {
+            it.asDomainLocations()
+        }
     }
 
-    private var workID = UUID(1,2)
-    //the manager is private to the repository
-    private val workManager = WorkManager.getInstance(context)
-    //the info function is public
-    override var wifiWorkInfo: Flow<WorkInfo> =
-        workManager.getWorkInfoByIdFlow(workID)
+    override suspend fun insertCharacter(character: Character) {
+        characterDao.insertCharacter(character.asDbCharacter())
+    }
 
-    override suspend fun refresh() {
-        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+    override suspend fun insertLocation(location: Location) {
+        locationDao.insertLocation(location.asDbLocation())
+    }
 
-//        val requestBuilder = OneTimeWorkRequestBuilder<WifiNotificationWorker>()
-//        val request = requestBuilder.setConstraints(constraints).build()
-//        workManager.enqueue(request)
-//        workID = request.id
-//        wifiWorkInfo = workManager.getWorkInfoByIdFlow(request.id)
-
-
+    override suspend fun refreshCharacters() {
         try {
-            apiService.getNewsAsFlow().asDomainObjects().collect {
+            Log.i("AppRepository", "refreshing characters: ")
+            apiService.getCharactersAsFlow().asDomainObjects().collect {
                     value ->
-                for (newsarticle in value) {
-                    Log.i("TEST", "refresh: $value")
-                    insertNewsarticle(newsarticle)
+                for (character in value) {
+                    insertCharacter(character)
                 }
             }
         } catch (e: SocketTimeoutException) {
             // log something
-            Log.i("TEST", "refresh: $e")
+            Log.i("AppRepository", "Error while refreshing characters: $e")
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun refreshLocations() {
+        try {
+            Log.i("AppRepository", "refreshing locations: ")
+            apiService.getLocationsAsFlow().asDomainObjects().collect {
+                    value ->
+                for (location in value) {
+                    insertLocation(location)
+                }
+            }
+        } catch (e: SocketTimeoutException) {
+            // log something
+            Log.i("AppRepository", "Error while refreshing locations: $e")
             e.printStackTrace()
         }
     }

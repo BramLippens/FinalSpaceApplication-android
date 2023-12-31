@@ -12,64 +12,63 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.brampie.myandroidapplication.R
+import dev.brampie.myandroidapplication.ui.character.CharacterScreen
 import dev.brampie.myandroidapplication.ui.components.Destinations
 import dev.brampie.myandroidapplication.ui.components.NavigationBar
 import dev.brampie.myandroidapplication.ui.components.NewsAppBar
-import dev.brampie.myandroidapplication.ui.navigation.NewsOverviewScreen
-import dev.brampie.myandroidapplication.ui.newsarticles.NewsarticleDetailScreen
-import dev.brampie.myandroidapplication.ui.overviewScreen.NewsOverview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsApp(
-    navigationType: NewsNavigationType,
+fun FinalSpaceApp(
+    navigationType: NavigationType,
     navController: NavHostController = rememberNavController()
 ){
     val currentScreenTitle = stringResource(R.string.go_to_home)
 
     val goHome: () -> Unit = {
         navController.popBackStack(
-            Destinations.Start.name,
+            Destinations.Characters.name,
             inclusive = false,
         )
     }
-    val goSearch: () -> Unit = {
-        navController.navigate(NewsOverviewScreen.Search.name)
+    val goLocation: () -> Unit = {
+        navController.navigate(Destinations.Locations.name)
     }
-    val goNewsarticleDetail: (Int) -> Unit = { id ->
-        navController.navigate("${Destinations.NewsDetail.name}/$id")
+    val goCharacterDetail: (Int) -> Unit = { id ->
+        navController.navigate("${Destinations.CharacterDetail.name}/${id}")
     }
 
     when(navigationType){
-        NewsNavigationType.BOTTOM_NAVIGATION -> {
+        NavigationType.BOTTOM_NAVIGATION -> {
             Scaffold(
                 topBar = {
                     NewsAppBar(currentScreentitle = currentScreenTitle)
                 },
                 bottomBar = {
-                    NavigationBar(onHome = goHome, onNews = goSearch)
+                    NavigationBar(onHome = goHome, onLocation = goLocation)
                 }
             ) { innerPadding ->
                 NavHost(
                     navController = navController,
-                    startDestination = NewsOverviewScreen.Start.name,
+                    startDestination = Destinations.Characters.name,
                     Modifier.padding(innerPadding)
                 ) {
-                    composable(NewsOverviewScreen.Start.name) {
-                        NewsOverview(
-                            onNewsarticleClick = goNewsarticleDetail
+                    composable(Destinations.Characters.name) {
+                        CharacterScreen(
+                            onClick = goCharacterDetail,
+                            modifier = Modifier.padding(innerPadding)
                         )
                     }
-                    composable("${Destinations.NewsDetail.name}/{id}") {
-                        NewsarticleDetailScreen(it.arguments?.getString("id")?.toInt() ?: 0)
+                    composable(Destinations.Locations.name) {
+                        Text(text = "Locations")
                     }
                 }
             }
         }
-        NewsNavigationType.NAVIGATION_RAIL -> {
+        NavigationType.NAVIGATION_RAIL -> {
             Text(text = "Navigation Rail")
         }
-        NewsNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+        NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
             Text(text = "Permanent Navigation Drawer")
         }
     }

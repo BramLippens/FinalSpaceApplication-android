@@ -1,6 +1,7 @@
 package dev.brampie.myandroidapplication.ui.components
 
 enum class Destinations {
-    Start,
-    NewsDetail,
+    Characters,
+    CharacterDetail,
+    Locations,
 }

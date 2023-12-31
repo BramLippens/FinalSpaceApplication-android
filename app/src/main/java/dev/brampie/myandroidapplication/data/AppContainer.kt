@@ -26,7 +26,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         .addInterceptor(networkCheck)
         .build()
 
-    private val BASE_URL = "https://newsapi.org/v2/"
+    private val BASE_URL = "https://finalspaceapi.com/api/v0/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(Json { ignoreUnknownKeys = true }
@@ -43,6 +43,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     // Provides a single instance of AppRepository throughout the app lifecycle.
     override val appRepository: AppRepository by lazy {
         CachingAppRepository(
-            apiService, AppDatabase.getDatabase(context = context).newsArticleDao(), context)
+            apiService,
+            AppDatabase.getDatabase(context = context).characterDao(),
+            AppDatabase.getDatabase(context = context).locationDao(),
+            context)
     }
 }

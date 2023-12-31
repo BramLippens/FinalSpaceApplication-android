@@ -4,7 +4,7 @@ import android.app.Application
 import dev.brampie.myandroidapplication.data.AppContainer
 import dev.brampie.myandroidapplication.data.DefaultAppContainer
 
-class NewsApplication: Application() {
+class FinalSpaceApplication: Application() {
     lateinit var container: AppContainer
 
     override fun onCreate() {

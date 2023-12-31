@@ -16,7 +16,7 @@ import dev.brampie.myandroidapplication.R
 @Composable
 fun NavigationBar(
     onHome: () -> Unit,
-    onNews: () -> Unit,
+    onLocation: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -32,11 +32,11 @@ fun NavigationBar(
             })
         NavigationBarItem(
             selected = false,
-            onClick = onNews,
+            onClick = onLocation,
             icon = {
                 Icon(
                     imageVector = Icons.Filled.Article,
-                    contentDescription = stringResource(R.string.go_to_news)
+                    contentDescription = stringResource(R.string.go_to_characters)
                 )
             })
     }

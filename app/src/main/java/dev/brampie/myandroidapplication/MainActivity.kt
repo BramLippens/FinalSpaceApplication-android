@@ -10,11 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import dev.brampie.myandroidapplication.ui.NewsApp
-import dev.brampie.myandroidapplication.ui.NewsNavigationType
+import dev.brampie.myandroidapplication.ui.FinalSpaceApp
+import dev.brampie.myandroidapplication.ui.NavigationType
 import dev.brampie.myandroidapplication.ui.theme.MyAndroidApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,13 +29,13 @@ class MainActivity : ComponentActivity() {
 
                     when(windowSize.widthSizeClass){
                         WindowWidthSizeClass.Compact -> {
-                            NewsApp(navigationType = NewsNavigationType.BOTTOM_NAVIGATION)
+                            FinalSpaceApp(navigationType = NavigationType.BOTTOM_NAVIGATION)
                         }
                         WindowWidthSizeClass.Medium -> {
-                            NewsApp(navigationType = NewsNavigationType.NAVIGATION_RAIL)
+                            FinalSpaceApp(navigationType = NavigationType.NAVIGATION_RAIL)
                         }
                         WindowWidthSizeClass.Expanded -> {
-                            NewsApp(navigationType = NewsNavigationType.PERMANENT_NAVIGATION_DRAWER)
+                            FinalSpaceApp(navigationType = NavigationType.PERMANENT_NAVIGATION_DRAWER)
                         }
                     }
                 }
