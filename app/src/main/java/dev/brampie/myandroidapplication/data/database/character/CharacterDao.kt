@@ -13,4 +13,7 @@ interface CharacterDao {
 
     @Query("SELECT * FROM characters")
     fun getAllCharacters(): Flow<List<DbCharacter>>
+
+    @Query("SELECT * FROM characters WHERE id = :id")
+    suspend fun getCharacterById(id: Int): DbCharacter?
 }

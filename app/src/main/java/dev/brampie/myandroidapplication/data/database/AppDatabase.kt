@@ -12,7 +12,7 @@ import dev.brampie.myandroidapplication.data.database.location.LocationDao
 
 @Database(
     entities = [DbCharacter::class, DbLocation::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase(){

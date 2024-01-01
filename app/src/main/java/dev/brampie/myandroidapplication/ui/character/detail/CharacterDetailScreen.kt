@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.brampie.myandroidapplication.R
-import dev.brampie.myandroidapplication.model.character.CharacterDetail
+import dev.brampie.myandroidapplication.model.character.Character
 import dev.brampie.myandroidapplication.network.character.ApiCharacterDetailState
 
 @Composable
 fun CharacterDetail(
-    character: CharacterDetail
+    character: Character
 ) {
     Text(text = character.name)
 }

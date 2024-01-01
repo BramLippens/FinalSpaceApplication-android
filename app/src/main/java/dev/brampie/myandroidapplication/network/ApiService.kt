@@ -2,7 +2,6 @@ package dev.brampie.myandroidapplication.network
 
 import android.util.Log
 import dev.brampie.myandroidapplication.network.character.ApiCharacter
-import dev.brampie.myandroidapplication.network.character.ApiCharacterDetail
 import dev.brampie.myandroidapplication.network.location.ApiLocation
 import kotlinx.coroutines.flow.flow
 import retrofit2.http.GET
@@ -16,7 +15,7 @@ interface ApiService{
     suspend fun getLocations(): List<ApiLocation>
 
     @GET("character/{id}")
-    suspend fun getCharacterDetailById(@Path("id") id: Int): ApiCharacterDetail
+    suspend fun getCharacterDetailById(@Path("id") id: Int): ApiCharacter
 }
 
 fun ApiService.getCharactersAsFlow() = flow {

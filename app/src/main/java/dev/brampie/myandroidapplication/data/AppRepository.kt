@@ -4,12 +4,12 @@ import android.content.Context
 import android.util.Log
 import dev.brampie.myandroidapplication.data.database.character.CharacterDao
 import dev.brampie.myandroidapplication.data.database.character.asDbCharacter
+import dev.brampie.myandroidapplication.data.database.character.asDomainCharacter
 import dev.brampie.myandroidapplication.data.database.character.asDomainCharacters
 import dev.brampie.myandroidapplication.data.database.location.LocationDao
 import dev.brampie.myandroidapplication.data.database.location.asDbLocation
 import dev.brampie.myandroidapplication.data.database.location.asDomainLocations
 import dev.brampie.myandroidapplication.model.character.Character
-import dev.brampie.myandroidapplication.model.character.CharacterDetail
 import dev.brampie.myandroidapplication.model.location.Location
 import dev.brampie.myandroidapplication.network.ApiService
 import dev.brampie.myandroidapplication.network.character.asDomainObject
@@ -19,14 +19,13 @@ import dev.brampie.myandroidapplication.network.getLocationsAsFlow
 import dev.brampie.myandroidapplication.network.location.asDomainObjects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
 
 interface AppRepository {
     fun getCharacters(): Flow<List<Character>>
     fun getLocations(): Flow<List<Location>>
 
-    suspend fun getCharacterDetail(id: Int): CharacterDetail?
+    suspend fun getCharacterDetail(id: Int): Character?
 
     suspend fun insertCharacter(character: Character)
     suspend fun insertLocation(location: Location)
@@ -53,8 +52,15 @@ class CachingAppRepository(
         }
     }
 
-    override suspend fun getCharacterDetail(id: Int): CharacterDetail {
-        return apiService.getCharacterDetailById(id).asDomainObject()
+    override suspend fun getCharacterDetail(id: Int): Character {
+        val local = characterDao.getCharacterById(id)
+        if(local != null) {
+            return local.asDomainCharacter()
+        }else{
+            val remote = apiService.getCharacterDetailById(id)
+            insertCharacter(remote.asDomainObject())
+            return remote.asDomainObject()
+        }
     }
 
     override suspend fun insertCharacter(character: Character) {
