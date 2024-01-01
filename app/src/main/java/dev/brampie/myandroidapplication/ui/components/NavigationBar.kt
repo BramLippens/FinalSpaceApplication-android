@@ -28,7 +28,7 @@ fun NavigationBar(
             icon = {
                 Icon(
                     imageVector = Icons.Filled.Person,
-                    contentDescription = stringResource(R.string.go_to_home)
+                    contentDescription = stringResource(R.string.go_to_characters)
                 )
             })
         NavigationBarItem(
@@ -37,7 +37,7 @@ fun NavigationBar(
             icon = {
                 Icon(
                     imageVector = Icons.Filled.LocationOn,
-                    contentDescription = stringResource(R.string.go_to_characters)
+                    contentDescription = stringResource(R.string.go_to_locations)
                 )
             })
     }

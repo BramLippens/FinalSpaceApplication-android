@@ -68,6 +68,7 @@ dependencies {
     //navigation
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
     implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-testing:2.7.6")
 
     //room
     val room_version = "2.5.0"
