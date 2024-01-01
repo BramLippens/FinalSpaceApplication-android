@@ -1,4 +1,4 @@
-package dev.brampie.myandroidapplication.ui.character
+package dev.brampie.myandroidapplication.ui.character.overview
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

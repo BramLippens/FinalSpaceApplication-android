@@ -9,8 +9,10 @@ import dev.brampie.myandroidapplication.data.database.location.LocationDao
 import dev.brampie.myandroidapplication.data.database.location.asDbLocation
 import dev.brampie.myandroidapplication.data.database.location.asDomainLocations
 import dev.brampie.myandroidapplication.model.character.Character
+import dev.brampie.myandroidapplication.model.character.CharacterDetail
 import dev.brampie.myandroidapplication.model.location.Location
 import dev.brampie.myandroidapplication.network.ApiService
+import dev.brampie.myandroidapplication.network.character.asDomainObject
 import dev.brampie.myandroidapplication.network.character.asDomainObjects
 import dev.brampie.myandroidapplication.network.getCharactersAsFlow
 import dev.brampie.myandroidapplication.network.getLocationsAsFlow
@@ -23,6 +25,8 @@ import java.net.SocketTimeoutException
 interface AppRepository {
     fun getCharacters(): Flow<List<Character>>
     fun getLocations(): Flow<List<Location>>
+
+    suspend fun getCharacterDetail(id: Int): CharacterDetail?
 
     suspend fun insertCharacter(character: Character)
     suspend fun insertLocation(location: Location)
@@ -47,6 +51,10 @@ class CachingAppRepository(
         return locationDao.getAllLocations().map {
             it.asDomainLocations()
         }
+    }
+
+    override suspend fun getCharacterDetail(id: Int): CharacterDetail {
+        return apiService.getCharacterDetailById(id).asDomainObject()
     }
 
     override suspend fun insertCharacter(character: Character) {

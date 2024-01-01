@@ -14,7 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.brampie.myandroidapplication.R
-import dev.brampie.myandroidapplication.ui.character.CharacterScreen
+import dev.brampie.myandroidapplication.ui.character.detail.CharacterDetailScreen
+import dev.brampie.myandroidapplication.ui.character.overview.CharacterScreen
 import dev.brampie.myandroidapplication.ui.components.Destinations
 import dev.brampie.myandroidapplication.ui.components.NavigationBar
 import dev.brampie.myandroidapplication.ui.components.NewsAppBar
@@ -68,6 +69,17 @@ fun FinalSpaceApp(
                         LocationScreen(
                             modifier = Modifier.padding(innerPadding)
                         )
+                    }
+                    composable("${Destinations.CharacterDetail.name}/{id}") { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+                        if (id == null) {
+                            Text(text = "Error")
+                        } else {
+                            CharacterDetailScreen(
+                                characterId = id,
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
                     }
                 }
             }

@@ -9,6 +9,5 @@ class CharacterDetail(
     val gender : String,
     val hair: String,
     val origin: String,
-    val abilities: List<String>,
     val img_url: String
 )

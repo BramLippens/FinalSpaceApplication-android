@@ -1,4 +1,4 @@
-package dev.brampie.myandroidapplication.ui.character
+package dev.brampie.myandroidapplication.ui.character.overview
 
 import dev.brampie.myandroidapplication.model.character.Character
 

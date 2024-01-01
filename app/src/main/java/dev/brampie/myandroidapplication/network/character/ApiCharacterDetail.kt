@@ -12,22 +12,11 @@ data class ApiCharacterDetail(
     val gender :String,
     val hair: String,
     val origin: String,
-    val abilities: List<ApiAbility>,
     val img_url: String
 )
 
-@Serializable
-data class ApiAbility(
-    val name: String
-)
-
-@Serializable
-data class ApiCharacterDetailResponse(
-    val character: ApiCharacterDetail
-)
-
-fun ApiCharacterDetailResponse.asDomainObject(): CharacterDetail{
-    return this.character.let{
+fun ApiCharacterDetail.asDomainObject(): CharacterDetail{
+    return let{
         CharacterDetail(
             externalId = it.id,
             name = it.name,
@@ -36,8 +25,6 @@ fun ApiCharacterDetailResponse.asDomainObject(): CharacterDetail{
             species = it.species,
             hair = it.hair,
             origin = it.origin,
-            //TODO: map abilities
-            abilities = it.abilities.map { ability -> ability.name },
             img_url = it.img_url
         )
     }
