@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.brampie.myandroidapplication.model.character.Character
@@ -38,9 +39,11 @@ fun CharacterItem(
         modifier = Modifier
             .padding(8.dp) // Outer padding for the card within the list
             .width(imageSize) // Set the width of the card to the scaled image size
-            .clickable { onClick(character.externalId) },
+            .clickable { onClick(character.externalId) }
+            .testTag("CharacterCard_${character.name}"),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
+
     ) {
         Column {
             AsyncImage(

@@ -1,6 +1,9 @@
 package dev.brampie.myandroidapplication.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -15,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.brampie.myandroidapplication.R
 import dev.brampie.myandroidapplication.ui.character.detail.CharacterDetailScreen
+import dev.brampie.myandroidapplication.ui.character.overview.CharacterItem
 import dev.brampie.myandroidapplication.ui.character.overview.CharacterScreen
 import dev.brampie.myandroidapplication.ui.components.Destinations
 import dev.brampie.myandroidapplication.ui.components.NavigationBar
@@ -85,10 +89,10 @@ fun FinalSpaceApp(
             }
         }
         NavigationType.NAVIGATION_RAIL -> {
-            Text(text = "Navigation Rail")
+
         }
         NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
-            Text(text = "Permanent Navigation Drawer")
+
         }
     }
 }

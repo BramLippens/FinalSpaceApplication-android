@@ -41,9 +41,9 @@ class LocationViewModel (
         getApiLocations()
     }
 
-    private fun getApiLocations() {
+    fun getApiLocations() {
         try{
-            Log.i("LocationViewModel", "getApiLocations: ")
+            //Log.i("LocationViewModel", "getApiLocations: ")
             viewModelScope.launch { appRepository.refreshLocations() }
             uiLocationListState = appRepository.getLocations().map { LocationListState(it) }
                 .stateIn(

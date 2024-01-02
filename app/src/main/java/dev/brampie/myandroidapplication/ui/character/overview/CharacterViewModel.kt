@@ -41,9 +41,9 @@ class CharacterViewModel (
         getApiCharacters()
     }
 
-    private fun getApiCharacters() {
+    fun getApiCharacters() {
         try{
-            Log.i("CharacterViewModel", "getApiCharacters: ")
+            //Log.i("CharacterViewModel", "getApiCharacters: ")
             viewModelScope.launch { appRepository.refreshCharacters() }
             uiCharacterListState = appRepository.getCharacters().map { CharacterListState(it) }
                 .stateIn(
@@ -52,7 +52,7 @@ class CharacterViewModel (
                     initialValue = CharacterListState(listOf())
                 )
             characterApiState = ApiCharacterState.Success
-            Log.i("CharacterViewModel", "getApiCharacters: success")
+            //Log.i("CharacterViewModel", "getApiCharacters: success")
         }catch (e: Exception){
             Log.i("CharacterViewModel", "getApiCharacters: ${e.message}")
             characterApiState = ApiCharacterState.Error
