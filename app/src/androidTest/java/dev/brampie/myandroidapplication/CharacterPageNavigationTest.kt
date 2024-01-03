@@ -1,7 +1,6 @@
 package dev.brampie.myandroidapplication
 
 import androidx.activity.ComponentActivity
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -12,7 +11,7 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.navigation.testing.TestNavHostController
 import dev.brampie.myandroidapplication.ui.FinalSpaceApp
-import dev.brampie.myandroidapplication.ui.NavigationType
+import dev.brampie.myandroidapplication.ui.components.NavigationType
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -1,9 +1,6 @@
 package dev.brampie.myandroidapplication.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,10 +19,9 @@ import dev.brampie.myandroidapplication.ui.character.overview.CharacterScreen
 import dev.brampie.myandroidapplication.ui.components.Destinations
 import dev.brampie.myandroidapplication.ui.components.FinalSpaceAppBar
 import dev.brampie.myandroidapplication.ui.components.NavigationBar
+import dev.brampie.myandroidapplication.ui.components.NavigationType
 import dev.brampie.myandroidapplication.ui.location.LocationScreen
 import dev.brampie.myandroidapplication.ui.search.SearchScreen
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinalSpaceApp(
     navigationType: NavigationType,
@@ -99,10 +95,7 @@ fun FinalSpaceApp(
                 }
             }
         }
-        NavigationType.NAVIGATION_RAIL -> {
-
-        }
-        NavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+        else-> {
 
         }
     }
