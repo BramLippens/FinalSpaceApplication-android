@@ -21,7 +21,7 @@ data class ApiCharacter(
 fun List<ApiCharacter>.asDomainObjects(): List<Character> {
     return map {
         Character(
-            externalId = it.id,
+            id = it.id,
             name = it.name,
             status = it.status,
             species = it.species,
@@ -40,7 +40,7 @@ fun Flow<List<ApiCharacter>>.asDomainObjects(): Flow<List<Character>> {
 
 fun ApiCharacter.asDomainObject(): Character {
     return Character(
-        externalId = id,
+        id = id,
         name = name,
         status = status,
         species = species?:"",

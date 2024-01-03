@@ -6,9 +6,8 @@ import dev.brampie.myandroidapplication.model.character.Character
 
 @Entity(tableName = "characters")
 data class DbCharacter(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int = 0,
-    val externalId: Int,
     val name: String,
     val status: String,
     val species: String,
@@ -20,8 +19,7 @@ data class DbCharacter(
 )
 
 fun DbCharacter.asDomainCharacter() : Character = Character(
-    internalId = id,
-    externalId = externalId,
+    id = id,
     name = name,
     status = status,
     species = species,
@@ -33,7 +31,7 @@ fun DbCharacter.asDomainCharacter() : Character = Character(
 )
 
 fun Character.asDbCharacter() : DbCharacter = DbCharacter(
-    externalId = externalId,
+    id = id,
     name = name,
     status = status,
     species = species,

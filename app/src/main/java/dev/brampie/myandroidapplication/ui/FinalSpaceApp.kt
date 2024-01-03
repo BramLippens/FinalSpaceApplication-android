@@ -18,12 +18,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.brampie.myandroidapplication.R
 import dev.brampie.myandroidapplication.ui.character.detail.CharacterDetailScreen
-import dev.brampie.myandroidapplication.ui.character.overview.CharacterItem
 import dev.brampie.myandroidapplication.ui.character.overview.CharacterScreen
 import dev.brampie.myandroidapplication.ui.components.Destinations
+import dev.brampie.myandroidapplication.ui.components.FinalSpaceAppBar
 import dev.brampie.myandroidapplication.ui.components.NavigationBar
-import dev.brampie.myandroidapplication.ui.components.NewsAppBar
 import dev.brampie.myandroidapplication.ui.location.LocationScreen
+import dev.brampie.myandroidapplication.ui.search.SearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,15 +47,23 @@ fun FinalSpaceApp(
     val goCharacterDetail: (Int) -> Unit = { id ->
         navController.navigate("${Destinations.CharacterDetail.name}/${id}")
     }
+    val goSearch: () -> Unit = {
+        navController.navigate(Destinations.Search.name)
+    }
 
     when(navigationType){
         NavigationType.BOTTOM_NAVIGATION -> {
             Scaffold(
                 topBar = {
-                    NewsAppBar(currentScreentitle = currentScreenTitle)
+                    FinalSpaceAppBar(currentScreentitle = currentScreenTitle)
                 },
                 bottomBar = {
-                    NavigationBar(onHome = goHome, onLocation = goLocation, currentBackStackEntry?.destination?.route)
+                    NavigationBar(
+                        onHome = goHome,
+                        onLocation = goLocation,
+                        onSearch = goSearch,
+                        currentBackStackEntry?.destination?.route
+                    )
                 }
             ) { innerPadding ->
                 NavHost(
@@ -84,6 +92,9 @@ fun FinalSpaceApp(
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }
+                    }
+                    composable(Destinations.Search.name) {
+                        SearchScreen(onClick =goCharacterDetail,modifier = Modifier.padding(innerPadding))
                     }
                 }
             }

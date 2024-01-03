@@ -11,7 +11,7 @@ import dev.brampie.myandroidapplication.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsAppBar(
+fun FinalSpaceAppBar(
     currentScreentitle: String
 ) {
     TopAppBar(
@@ -20,7 +20,7 @@ fun NewsAppBar(
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         title = {
-            Text(stringResource(R.string.app_name))
+            Text(currentScreentitle)
         },
     )
 }

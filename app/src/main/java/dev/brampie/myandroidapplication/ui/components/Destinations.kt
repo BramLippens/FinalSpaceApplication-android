@@ -4,4 +4,5 @@ enum class Destinations {
     Characters,
     CharacterDetail,
     Locations,
+    Search
 }

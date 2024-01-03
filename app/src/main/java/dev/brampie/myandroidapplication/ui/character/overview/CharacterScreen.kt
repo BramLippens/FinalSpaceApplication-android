@@ -1,9 +1,15 @@
 package dev.brampie.myandroidapplication.ui.character.overview
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -18,6 +24,7 @@ fun CharacterScreen(
 ) {
     val characterApiState = characterViewModel.characterApiState
     val uiCharacterListState by characterViewModel.uiCharacterListState.collectAsState()
+    val characterByName by characterViewModel.characterByName.collectAsState()
 
     when(characterApiState) {
         is ApiCharacterState.Error -> {
@@ -32,4 +39,6 @@ fun CharacterScreen(
             CharacterList(uiCharacterListState.characterList, onClick)
         }
     }
+
+
 }

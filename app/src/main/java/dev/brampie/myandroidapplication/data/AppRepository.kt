@@ -27,6 +27,9 @@ interface AppRepository {
 
     suspend fun getCharacterDetail(id: Int): Character?
 
+    fun getCharacterByName(name: String): Flow<List<Character>>
+
+
     suspend fun insertCharacter(character: Character)
     suspend fun insertLocation(location: Location)
 
@@ -60,6 +63,12 @@ class CachingAppRepository(
             val remote = apiService.getCharacterDetailById(id)
             insertCharacter(remote.asDomainObject())
             return remote.asDomainObject()
+        }
+    }
+
+    override fun getCharacterByName(name: String): Flow<List<Character>> {
+        return characterDao.getCharactersByName(name).map {
+            it.asDomainCharacters()
         }
     }
 

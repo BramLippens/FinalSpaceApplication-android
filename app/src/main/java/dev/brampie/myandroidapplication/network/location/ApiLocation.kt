@@ -16,7 +16,7 @@ data class ApiLocation(
 fun List<ApiLocation>.asDomainObjects(): List<Location> {
     return map {
         Location(
-            externalId = it.id,
+            id = it.id,
             name = it.name,
             type = it.type,
             img_url = it.img_url

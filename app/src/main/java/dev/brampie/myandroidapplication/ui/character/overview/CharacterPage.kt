@@ -39,7 +39,7 @@ fun CharacterItem(
         modifier = Modifier
             .padding(8.dp) // Outer padding for the card within the list
             .width(imageSize) // Set the width of the card to the scaled image size
-            .clickable { onClick(character.externalId) }
+            .clickable { onClick(character.id) }
             .testTag("CharacterCard_${character.name}"),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),

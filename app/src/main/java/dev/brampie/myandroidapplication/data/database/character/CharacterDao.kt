@@ -16,4 +16,7 @@ interface CharacterDao {
 
     @Query("SELECT * FROM characters WHERE id = :id")
     suspend fun getCharacterById(id: Int): DbCharacter?
+
+    @Query("SELECT * FROM characters WHERE name LIKE '%' || :name || '%'")
+    fun getCharactersByName(name: String): Flow<List<DbCharacter>>
 }

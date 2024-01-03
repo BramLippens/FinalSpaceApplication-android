@@ -1,8 +1,7 @@
 package dev.brampie.myandroidapplication.model.character
 
 class Character (
-    val internalId: Int = 0,
-    val externalId: Int,
+    val id: Int,
     val name: String,
     val status: String,
     val species: String,

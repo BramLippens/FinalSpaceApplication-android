@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -19,6 +20,7 @@ import dev.brampie.myandroidapplication.R
 fun NavigationBar(
     onHome: () -> Unit,
     onLocation: () -> Unit,
+    onSearch: () -> Unit,
     currentBackStackEntry: String?,
 ) {
     BottomAppBar {
@@ -38,6 +40,15 @@ fun NavigationBar(
                 Icon(
                     imageVector = Icons.Filled.LocationOn,
                     contentDescription = stringResource(R.string.go_to_locations)
+                )
+            })
+        NavigationBarItem(
+            selected = currentBackStackEntry == Destinations.Search.name,
+            onClick = onSearch,
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = stringResource(R.string.go_to_search)
                 )
             })
     }

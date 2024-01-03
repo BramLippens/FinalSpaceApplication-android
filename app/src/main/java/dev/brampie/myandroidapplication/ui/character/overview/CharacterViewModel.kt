@@ -14,9 +14,11 @@ import dev.brampie.myandroidapplication.FinalSpaceApplication
 import dev.brampie.myandroidapplication.data.AppRepository
 import dev.brampie.myandroidapplication.network.character.ApiCharacterState
 import dev.brampie.myandroidapplication.network.character.CharacterListState
+import dev.brampie.myandroidapplication.model.character.Character
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -56,6 +58,20 @@ class CharacterViewModel (
         }catch (e: Exception){
             Log.i("CharacterViewModel", "getApiCharacters: ${e.message}")
             characterApiState = ApiCharacterState.Error
+        }
+    }
+
+    private val _characterByName = MutableStateFlow<List<Character>>(emptyList())
+    val characterByName: StateFlow<List<Character>> = _characterByName.asStateFlow()
+
+    fun fetchCharacterByName(name: String) {
+        viewModelScope.launch {
+            try {
+                _characterByName.value = appRepository.getCharacterByName(name).first()
+            } catch (e: Exception) {
+                Log.e("CharacterViewModel", "Error fetching character: ${e.message}")
+                _characterByName.value = emptyList()
+            }
         }
     }
 

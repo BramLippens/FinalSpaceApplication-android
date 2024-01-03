@@ -6,24 +6,22 @@ import dev.brampie.myandroidapplication.model.location.Location
 
 @Entity(tableName = "locations")
 data class DbLocation(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int = 0,
-    val externalId: Int,
     val name: String,
     val type: String,
     val img_url: String
 )
 
 fun DbLocation.asDomainLocation() : Location = Location(
-    internalId = id,
-    externalId = externalId,
+    id = id,
     name = name,
     type = type,
     img_url = img_url
 )
 
 fun Location.asDbLocation() : DbLocation = DbLocation(
-    externalId = externalId,
+    id = id,
     name = name,
     type = type,
     img_url = img_url
