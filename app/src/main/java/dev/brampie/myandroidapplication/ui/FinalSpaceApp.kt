@@ -1,5 +1,6 @@
 package dev.brampie.myandroidapplication.ui
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -20,6 +21,7 @@ import dev.brampie.myandroidapplication.ui.components.Destinations
 import dev.brampie.myandroidapplication.ui.components.FinalSpaceAppBar
 import dev.brampie.myandroidapplication.ui.components.NavigationBar
 import dev.brampie.myandroidapplication.ui.components.NavigationType
+import dev.brampie.myandroidapplication.ui.components.RailAppNavigation
 import dev.brampie.myandroidapplication.ui.location.LocationScreen
 import dev.brampie.myandroidapplication.ui.search.SearchScreen
 @Composable
@@ -29,7 +31,12 @@ fun FinalSpaceApp(
 ){
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
-    val currentScreenTitle = stringResource(R.string.go_to_home)
+    val currentScreenTitle = when (currentBackStackEntry?.destination?.route) {
+        Destinations.Characters.name -> stringResource(R.string.go_to_characters)
+        Destinations.Locations.name -> stringResource(R.string.go_to_locations)
+        Destinations.Search.name -> stringResource(R.string.go_to_search)
+        else -> stringResource(R.string.app_name)
+    }
 
     val goHome: () -> Unit = {
         navController.popBackStack(
@@ -90,13 +97,48 @@ fun FinalSpaceApp(
                         }
                     }
                     composable(Destinations.Search.name) {
-                        SearchScreen(onClick =goCharacterDetail,modifier = Modifier.padding(innerPadding))
+                        SearchScreen(onClick = goCharacterDetail, modifier = Modifier.padding(innerPadding))
                     }
                 }
             }
         }
         else-> {
+            Row {
+                RailAppNavigation(
+                    onHome = goHome,
+                    onLocation = goLocation,
+                    onSearch = goSearch,
+                    currentBackStackEntry?.destination?.route
+                )
+                NavHost(
+                    navController = navController,
+                    startDestination = Destinations.Characters.name,
+                ) {
+                    composable(Destinations.Characters.name) {
+                        CharacterScreen(
+                            onClick = goCharacterDetail,
+                        )
+                    }
+                    composable(Destinations.Locations.name) {
+                        LocationScreen(
 
+                        )
+                    }
+                    composable("${Destinations.CharacterDetail.name}/{id}") { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+                        if (id == null) {
+                            Text(text = "Error")
+                        } else {
+                            CharacterDetailScreen(
+                                characterId = id,
+                            )
+                        }
+                    }
+                    composable(Destinations.Search.name) {
+                        SearchScreen(onClick = goCharacterDetail)
+                    }
+                }
+            }
         }
     }
 }
