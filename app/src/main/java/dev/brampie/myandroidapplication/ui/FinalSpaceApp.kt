@@ -100,6 +100,7 @@ fun FinalSpaceApp(
                         } else {
                             CharacterDetailScreen(
                                 characterId = id,
+                                isLandscape = false,
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }
@@ -140,6 +141,7 @@ fun FinalSpaceApp(
                         } else {
                             CharacterDetailScreen(
                                 characterId = id,
+                                isLandscape = true
                             )
                         }
                     }

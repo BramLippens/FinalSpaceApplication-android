@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -42,45 +43,78 @@ import dev.brampie.myandroidapplication.network.character.ApiCharacterDetailStat
 @Composable
 fun CharacterDetail(
     character: Character,
+    isLandscape: Boolean,
     modifier: Modifier = Modifier
 ) {
     val imageSize = 300.dp
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {
-            Column(
+    // Choose between Column for portrait and Row for landscape
+    if (!isLandscape) {
+        // Portrait mode layout
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .size(imageSize)
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
+                    AsyncImage(
+                        model = character.img_url,
+                        contentDescription = "Image for ${character.name}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    )
+                }
+            }
+            item { DetailContent(character, imageSize) }
+        }
+    } else {
+        // Landscape mode layout
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Image on the left
+            AsyncImage(
+                model = character.img_url,
+                contentDescription = "Image for ${character.name}",
+                modifier = Modifier
+                    .size(imageSize)
+                    .background(MaterialTheme.colorScheme.surface)
+            )
+
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(start = 16.dp),
+                horizontalAlignment = Alignment.Start
             ) {
-                AsyncImage(
-                    model = character.img_url,
-                    contentDescription = "Image for ${character.name}",
-                    modifier = Modifier
-                        .size(imageSize) // Set the image to be square with the defined size
-                        .background(MaterialTheme.colorScheme.surface)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = character.name,
-                    style = MaterialTheme.typography.headlineMedium,
-
-                    )
-                DetailItem(label = "Status", value = character.status)
-                DetailItem(label = "Species", value = character.species)
-                DetailItem(label = "Gender", value = character.gender)
-                DetailItem(label = "Hair", value = character.hair)
-                DetailItem(label = "Origin", value = character.origin)
-                AbilitiesSection(abilities = character.abilities)
+                item { DetailContent(character, imageSize) }
             }
         }
     }
+}
+
+@Composable
+fun DetailContent(character: Character, imageSize: Dp) {
+    Spacer(modifier = Modifier.height(16.dp))
+    Text(
+        text = character.name,
+        style = MaterialTheme.typography.headlineMedium,
+    )
+    DetailItem(label = "Status", value = character.status)
+    DetailItem(label = "Species", value = character.species)
+    DetailItem(label = "Gender", value = character.gender)
+    DetailItem(label = "Hair", value = character.hair)
+    DetailItem(label = "Origin", value = character.origin)
+    AbilitiesSection(abilities = character.abilities)
 }
 
 /**
@@ -153,6 +187,7 @@ fun Chip(label: String) {
 fun CharacterDetailScreen(
     characterId: Int,
     modifier: Modifier = Modifier,
+    isLandscape: Boolean,
     characterDetailViewModel: CharacterDetailViewModel = viewModel(factory = CharacterDetailViewModel.Factory)
 ) {
     LaunchedEffect(characterId) {
@@ -169,7 +204,7 @@ fun CharacterDetailScreen(
         is ApiCharacterDetailState.Success -> {
             Log.i("CharacterDetailScreen", "CharacterDetailScreen: ${characterDetailApiState.character}")
             characterDetailApiState.character?.let {
-                CharacterDetail(character = it)
+                CharacterDetail(character = it, isLandscape = isLandscape)
             }
         }
     }

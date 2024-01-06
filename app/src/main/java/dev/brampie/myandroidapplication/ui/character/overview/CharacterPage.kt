@@ -64,8 +64,10 @@ fun CharacterItem(
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(text = character.name.truncate(16), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Species: ${character.species.truncate(20)}", style = MaterialTheme.typography.bodySmall)
-                Text(text = "Status: ${character.status.truncate(16)}", style = MaterialTheme.typography.bodySmall)
+                if (!isLandscape){
+                    Text(text = "Species: ${character.species.truncate(20)}", style = MaterialTheme.typography.bodySmall)
+                    Text(text = "Status: ${character.status.truncate(16)}", style = MaterialTheme.typography.bodySmall)
+                }
             }
         }
     }
