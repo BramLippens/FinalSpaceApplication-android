@@ -33,6 +33,12 @@ import dev.brampie.myandroidapplication.R
 import dev.brampie.myandroidapplication.model.character.Character
 import dev.brampie.myandroidapplication.network.character.ApiCharacterDetailState
 
+/**
+ * A Composable function that displays detailed information about a character.
+ *
+ * @param character The [Character] object to display details for.
+ * @param modifier The modifier to apply to the Composable.
+ */
 @Composable
 fun CharacterDetail(
     character: Character,
@@ -77,6 +83,12 @@ fun CharacterDetail(
     }
 }
 
+/**
+ * A Composable function that displays a detail item with a label and value.
+ *
+ * @param label The label to display.
+ * @param value The value to display.
+ */
 @Composable
 fun DetailItem(label: String, value: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -92,6 +104,11 @@ fun DetailItem(label: String, value: String) {
     Spacer(modifier = Modifier.height(4.dp))
 }
 
+/**
+ * A Composable function that displays a section for character abilities.
+ *
+ * @param abilities The list of abilities to display.
+ */
 @Composable
 fun AbilitiesSection(abilities: List<String>) {
     Text(
@@ -103,6 +120,11 @@ fun AbilitiesSection(abilities: List<String>) {
     }
 }
 
+/**
+ * A Composable function that displays a chip-like component.
+ *
+ * @param label The label to display in the chip.
+ */
 @Composable
 fun Chip(label: String) {
     Surface(
@@ -120,6 +142,13 @@ fun Chip(label: String) {
     }
 }
 
+/**
+ * A Composable function that represents the screen for character details.
+ *
+ * @param characterId The identifier of the character to display details for.
+ * @param modifier The modifier to apply to the Composable.
+ * @param characterDetailViewModel The ViewModel responsible for character details.
+ */
 @Composable
 fun CharacterDetailScreen(
     characterId: Int,
@@ -129,7 +158,6 @@ fun CharacterDetailScreen(
     LaunchedEffect(characterId) {
         characterDetailViewModel.getCharacterDetail(characterId)
     }
-//    characterDetailViewModel.getCharacterDetail(characterId)
 
     when(val characterDetailApiState = characterDetailViewModel.characterState.collectAsState().value) {
         is ApiCharacterDetailState.Error -> {
@@ -140,10 +168,9 @@ fun CharacterDetailScreen(
         }
         is ApiCharacterDetailState.Success -> {
             Log.i("CharacterDetailScreen", "CharacterDetailScreen: ${characterDetailApiState.character}")
-                characterDetailApiState.character?.let {
-                    CharacterDetail(character = it)
-                }
-
+            characterDetailApiState.character?.let {
+                CharacterDetail(character = it)
+            }
         }
     }
 }

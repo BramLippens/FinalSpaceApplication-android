@@ -10,6 +10,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.brampie.myandroidapplication.R
 import dev.brampie.myandroidapplication.network.location.ApiLocationState
 
+/**
+ * A Composable function that displays a screen containing a list of locations.
+ *
+ * @param modifier The modifier to apply to the Composable.
+ * @param locationViewModel The ViewModel responsible for location data.
+ */
 @Composable
 fun LocationScreen(
     modifier: Modifier = Modifier,

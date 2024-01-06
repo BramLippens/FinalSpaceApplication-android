@@ -15,6 +15,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel responsible for character details.
+ *
+ * @property appRepository The [AppRepository] instance to fetch character details from.
+ */
 class CharacterDetailViewModel (
     private val appRepository: AppRepository
 ) : ViewModel(
@@ -22,6 +27,11 @@ class CharacterDetailViewModel (
     private val _characterState = MutableStateFlow<ApiCharacterDetailState>(ApiCharacterDetailState.Loading)
     val characterState: StateFlow<ApiCharacterDetailState> = _characterState.asStateFlow()
 
+    /**
+     * Fetch detailed information about a character by its [id].
+     *
+     * @param id The unique identifier of the character to retrieve.
+     */
     fun getCharacterDetail(id: Int) {
         viewModelScope.launch {
             try{
@@ -36,6 +46,9 @@ class CharacterDetailViewModel (
     }
 
     companion object{
+        /**
+         * Factory for creating instances of [CharacterDetailViewModel].
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as FinalSpaceApplication)

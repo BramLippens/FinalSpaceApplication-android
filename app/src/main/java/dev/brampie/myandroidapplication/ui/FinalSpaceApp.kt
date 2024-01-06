@@ -2,7 +2,6 @@ package dev.brampie.myandroidapplication.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +23,13 @@ import dev.brampie.myandroidapplication.ui.components.NavigationType
 import dev.brampie.myandroidapplication.ui.components.RailAppNavigation
 import dev.brampie.myandroidapplication.ui.location.LocationScreen
 import dev.brampie.myandroidapplication.ui.search.SearchScreen
+
+/**
+ * A Composable function representing the main navigation structure of the Final Space app.
+ *
+ * @param navigationType The type of navigation to be used (e.g., Bottom Navigation, Navigation Rail).
+ * @param navController The navigation controller responsible for managing navigation within the app.
+ */
 @Composable
 fun FinalSpaceApp(
     navigationType: NavigationType,
@@ -31,6 +37,7 @@ fun FinalSpaceApp(
 ){
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
+    // Determine the current screen title based on the destination route
     val currentScreenTitle = when (currentBackStackEntry?.destination?.route) {
         Destinations.Characters.name -> stringResource(R.string.go_to_characters)
         Destinations.Locations.name -> stringResource(R.string.go_to_locations)
@@ -77,7 +84,8 @@ fun FinalSpaceApp(
                     composable(Destinations.Characters.name) {
                         CharacterScreen(
                             onClick = goCharacterDetail,
-                            modifier = Modifier.padding(innerPadding)
+                            modifier = Modifier.padding(innerPadding),
+                            isLandscape = false
                         )
                     }
                     composable(Destinations.Locations.name) {
@@ -117,6 +125,7 @@ fun FinalSpaceApp(
                     composable(Destinations.Characters.name) {
                         CharacterScreen(
                             onClick = goCharacterDetail,
+                            isLandscape = true
                         )
                     }
                     composable(Destinations.Locations.name) {

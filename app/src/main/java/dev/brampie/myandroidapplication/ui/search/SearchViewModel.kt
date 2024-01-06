@@ -10,18 +10,36 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import dev.brampie.myandroidapplication.FinalSpaceApplication
 import dev.brampie.myandroidapplication.data.AppRepository
 import dev.brampie.myandroidapplication.model.character.Character
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel responsible for character search and managing search results.
+ *
+ * @property appRepository The [AppRepository] instance to fetch character data from.
+ */
+@OptIn(FlowPreview::class)
 class SearchViewModel (
     private val appRepository: AppRepository
 ): ViewModel() {
+    private var _characterName = MutableStateFlow("")
+
     private val _characterByName = MutableStateFlow<List<Character>>(emptyList())
+    /**
+     * Represents the list of characters matching the search criteria.
+     */
     val characterByName: StateFlow<List<Character>> = _characterByName.asStateFlow()
 
+    /**
+     * Fetch characters by name using the provided search query.
+     *
+     * @param name The name of the character to search for.
+     */
     fun fetchCharacterByName(name: String) {
         viewModelScope.launch {
             try {
@@ -32,9 +50,30 @@ class SearchViewModel (
             }
         }
     }
+    init {
+        viewModelScope.launch {
+            _characterName
+                .debounce(1000)
+                .collect {name ->
+                    if(name.isNotEmpty()) {
+                        fetchCharacterByName(name)
+                    }else{
+                        _characterByName.value = emptyList()
+                    }
+
+            }
+        }
+    }
+
+    fun onQueryChanged(it: String) {
+        _characterName.value = it
+    }
 
     companion object {
         private var Instance: SearchViewModel? = null
+        /**
+         * Factory for creating instances of [SearchViewModel].
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if (Instance == null) {

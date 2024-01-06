@@ -16,6 +16,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import dev.brampie.myandroidapplication.R
 
+/**
+ * A custom bottom navigation bar for the Final Space application.
+ *
+ * @param onHome The click event handler for the "Characters" navigation item.
+ * @param onLocation The click event handler for the "Locations" navigation item.
+ * @param onSearch The click event handler for the "Search" navigation item.
+ * @param currentBackStackEntry The name of the current back stack entry to determine the selected item.
+ */
 @Composable
 fun NavigationBar(
     onHome: () -> Unit,

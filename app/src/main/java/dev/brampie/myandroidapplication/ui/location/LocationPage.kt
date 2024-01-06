@@ -25,13 +25,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.brampie.myandroidapplication.model.location.Location
 
+/**
+ * A Composable function that displays a single location item in a card.
+ *
+ * @param location The [Location] object to display.
+ * @param modifier The modifier to apply to the Composable.
+ */
 @Composable
 fun LocationItem(
     location: Location,
     modifier: Modifier = Modifier,
 ) {
-    val imageSize = 300.dp
-
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -48,7 +52,7 @@ fun LocationItem(
                     .height(300.dp)
                     .background(MaterialTheme.colorScheme.surface)
             )
-            Column(modifier = Modifier.padding(8.dp)) { // Internal padding for text content
+            Column(modifier = Modifier.padding(8.dp)) {
                 Text(text = location.name, style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Type: ${location.type}", style = MaterialTheme.typography.bodySmall)
@@ -57,6 +61,11 @@ fun LocationItem(
     }
 }
 
+/**
+ * A Composable function that displays a list of locations using a LazyColumn.
+ *
+ * @param locations The list of [Location] objects to display.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LocationList(
@@ -71,10 +80,9 @@ fun LocationList(
             items(locations) { location ->
                 LocationItem(
                     location = location,
-                    modifier = Modifier.animateItemPlacement() // Adds simple animations for item placements
+                    modifier = Modifier.animateItemPlacement()
                 )
             }
         }
     }
-
 }

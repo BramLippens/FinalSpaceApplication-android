@@ -21,22 +21,73 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.net.SocketTimeoutException
 
+/**
+ * The `AppRepository` interface defines methods for interacting with the application's data sources.
+ */
 interface AppRepository {
+    /**
+     * Get a [Flow] of characters from the data source.
+     *
+     * @return A [Flow] emitting a list of characters.
+     */
     fun getCharacters(): Flow<List<Character>>
+
+    /**
+     * Get a [Flow] of locations from the data source.
+     *
+     * @return A [Flow] emitting a list of locations.
+     */
     fun getLocations(): Flow<List<Location>>
 
+    /**
+     * Get a character by its unique identifier.
+     *
+     * @param id The unique identifier of the character.
+     * @return The character with the given [id], or null if no character with that id exists.
+     */
     suspend fun getCharacterDetail(id: Int): Character?
 
+    /**
+     * Get a [Flow] of characters with a name matching the given [name].
+     *
+     * @param name The name to match.
+     * @return A [Flow] emitting a list of characters with a matching name.
+     */
     fun getCharacterByName(name: String): Flow<List<Character>>
 
-
+    /**
+     * Insert a character into the data source.
+     *
+     * @param character The character to insert.
+     */
     suspend fun insertCharacter(character: Character)
+
+    /**
+     * Insert a location into the data source.
+     *
+     * @param location The location to insert.
+     */
     suspend fun insertLocation(location: Location)
 
+    /**
+     * Refresh the characters stored in the data source.
+     */
     suspend fun refreshCharacters()
+
+    /**
+     * Refresh the locations stored in the data source.
+     */
     suspend fun refreshLocations()
 }
 
+/**
+ * The `AppRepository` implementation for the application.
+ *
+ * @property apiService The [ApiService] for making network requests.
+ * @property characterDao The [CharacterDao] for accessing and managing [DbCharacter] entities in the database.
+ * @property locationDao The [LocationDao] for accessing and managing [DbLocation] entities in the database.
+ * @property context The application context.
+ */
 class CachingAppRepository(
     private val apiService: ApiService,
     private val characterDao: CharacterDao,

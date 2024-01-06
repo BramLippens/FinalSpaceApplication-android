@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -26,19 +27,26 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.brampie.myandroidapplication.model.character.Character
 
+/**
+ * A Composable function that displays a single character item in a card.
+ *
+ * @param character The [Character] object to display.
+ * @param onClick The click event handler for the character item.
+ * @param modifier The modifier to apply to the Composable.
+ */
 @Composable
 fun CharacterItem(
     character: Character,
     onClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isLandscape: Boolean
 ) {
-    // Assuming you want to use an appropriate size for the UI, consider scaling
-    val imageSize = 300.dp // Adjust this based on your UI needs
+    val imageSize = if(isLandscape) 200.dp else 300.dp
 
     Card(
         modifier = Modifier
-            .padding(8.dp) // Outer padding for the card within the list
-            .width(imageSize) // Set the width of the card to the scaled image size
+            .padding(8.dp)
+            .width(imageSize)
             .clickable { onClick(character.id) }
             .testTag("CharacterCard_${character.name}"),
         shape = RoundedCornerShape(12.dp),
@@ -50,39 +58,72 @@ fun CharacterItem(
                 model = character.img_url,
                 contentDescription = "Image for ${character.name}",
                 modifier = Modifier
-                    .size(imageSize) // Set the image to be square with the defined size
+                    .size(imageSize)
                     .background(MaterialTheme.colorScheme.surface)
             )
-            Column(modifier = Modifier.padding(8.dp)) { // Internal padding for text content
-                Text(text = character.name, style = MaterialTheme.typography.titleMedium)
+            Column(modifier = Modifier.padding(8.dp)) {
+                Text(text = character.name.truncate(16), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Species: ${character.species}", style = MaterialTheme.typography.bodySmall)
-                Text(text = "Status: ${character.status}", style = MaterialTheme.typography.bodySmall)
+                Text(text = "Species: ${character.species.truncate(20)}", style = MaterialTheme.typography.bodySmall)
+                Text(text = "Status: ${character.status.truncate(16)}", style = MaterialTheme.typography.bodySmall)
             }
         }
     }
 }
 
+fun String.truncate(maxLength: Int): String {
+    return if (this.length > maxLength) {
+        this.substring(0, maxLength) + "..."
+    } else {
+        this
+    }
+}
 
-
-
+/**
+ * A Composable function that displays a list of characters using a LazyColumn.
+ *
+ * @param characters The list of [Character] objects to display.
+ * @param onCharacterClick The click event handler for character items.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CharacterList(characters: List<Character>, onCharacterClick: (Int) -> Unit) {
+fun CharacterList(
+    characters: List<Character>,
+    onCharacterClick: (Int) -> Unit,
+    isLandscape: Boolean = false
+) {
     Box (
         modifier = Modifier.fillMaxSize()
     ){
-        LazyColumn(
-            modifier = Modifier
+        if(isLandscape){
+            LazyRow(modifier = Modifier
                 .align(Alignment.Center)
                 .background(MaterialTheme.colorScheme.background)
-        ) {
-            items(characters) { character ->
-                CharacterItem(
-                    character = character,
-                    onClick = onCharacterClick,
-                    modifier = Modifier.animateItemPlacement() // Adds simple animations for item placements
-                )
+            ){
+                items(characters) { character ->
+                    CharacterItem(
+                        character = character,
+                        onClick = onCharacterClick,
+                        modifier = Modifier.animateItemPlacement(),
+                        isLandscape = isLandscape
+                    )
+                }
+            }
+        }
+        else{
+            LazyColumn(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+                items(characters) { character ->
+                    CharacterItem(
+                        character = character,
+                        onClick = onCharacterClick,
+                        modifier = Modifier.animateItemPlacement(),
+                        isLandscape = isLandscape
+                    )
+                }
             }
         }
     }

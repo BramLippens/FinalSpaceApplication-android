@@ -11,10 +11,21 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
+/**
+ * The `AppContainer` interface provides access to various application components.
+ */
 interface AppContainer {
+    /**
+     * Get the instance of [AppRepository] used for interacting with the application's data sources.
+     */
     val appRepository: AppRepository
 }
 
+/**
+ * The default implementation of the [AppContainer] interface.
+ *
+ * @param context The application context.
+ */
 class DefaultAppContainer(private val context: Context) : AppContainer {
     private val networkCheck = NetworkConnectionInterceptor(context)
     val logging = HttpLoggingInterceptor().apply {
@@ -40,12 +51,16 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
         .client(client)
         .build()
 
-    // Lazily initializes the ApiService using Retrofit.
+    /**
+     *  Lazily initializes the ApiService using Retrofit.
+     */
     private val apiService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
 
-    // Provides a single instance of AppRepository throughout the app lifecycle.
+    /**
+     * Provides a single instance of [AppRepository] throughout the app lifecycle.
+     */
     override val appRepository: AppRepository by lazy {
         CachingAppRepository(
             apiService,

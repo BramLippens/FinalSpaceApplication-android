@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
     id("com.google.devtools.ksp")
+    id("org.jetbrains.dokka")
+
 }
 
 android {
@@ -107,6 +109,9 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.navigation:navigation-testing:2.6.0")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
+
+    // Dokka
+    dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

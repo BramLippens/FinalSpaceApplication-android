@@ -11,6 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import dev.brampie.myandroidapplication.R
 
+/**
+ * A custom navigation rail layout for the Final Space application.
+ *
+ * @param onHome The click event handler for the "Characters" navigation item.
+ * @param onLocation The click event handler for the "Locations" navigation item.
+ * @param onSearch The click event handler for the "Search" navigation item.
+ * @param currentBackStackEntry The name of the current back stack entry to determine the selected item.
+ */
 @Composable
 fun RailAppNavigation(
     onHome: () -> Unit,

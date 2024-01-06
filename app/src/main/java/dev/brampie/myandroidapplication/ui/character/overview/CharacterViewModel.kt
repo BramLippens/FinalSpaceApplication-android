@@ -23,6 +23,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel responsible for managing character data and UI states.
+ *
+ * @property appRepository The [AppRepository] instance to fetch character data from.
+ */
 class CharacterViewModel (
     private val appRepository: AppRepository
 ) : ViewModel(){
@@ -39,10 +44,16 @@ class CharacterViewModel (
     var characterApiState: ApiCharacterState by mutableStateOf(ApiCharacterState.Loading)
         private set
 
+    /**
+     * Initialize the ViewModel and fetch character data from the API.
+     */
     init {
         getApiCharacters()
     }
 
+    /**
+     * Fetch character data from the API and update the UI states accordingly.
+     */
     fun getApiCharacters() {
         try{
             //Log.i("CharacterViewModel", "getApiCharacters: ")
@@ -61,22 +72,12 @@ class CharacterViewModel (
         }
     }
 
-    private val _characterByName = MutableStateFlow<List<Character>>(emptyList())
-    val characterByName: StateFlow<List<Character>> = _characterByName.asStateFlow()
-
-    fun fetchCharacterByName(name: String) {
-        viewModelScope.launch {
-            try {
-                _characterByName.value = appRepository.getCharacterByName(name).first()
-            } catch (e: Exception) {
-                Log.e("CharacterViewModel", "Error fetching character: ${e.message}")
-                _characterByName.value = emptyList()
-            }
-        }
-    }
-
     companion object{
         private var Instance: CharacterViewModel? = null
+
+        /**
+         * Factory for creating instances of [CharacterViewModel].
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if(Instance == null){

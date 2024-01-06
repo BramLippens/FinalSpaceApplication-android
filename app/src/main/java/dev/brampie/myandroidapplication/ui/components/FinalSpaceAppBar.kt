@@ -9,6 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import dev.brampie.myandroidapplication.R
 
+/**
+ * A custom top app bar for the Final Space application.
+ *
+ * @param currentScreentitle The title to display in the app bar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinalSpaceAppBar(

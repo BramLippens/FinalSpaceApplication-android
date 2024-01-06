@@ -1,5 +1,21 @@
 package dev.brampie.myandroidapplication.ui.components
 
+/**
+ * Represents the types of navigation layouts available in the Final Space application.
+ */
 enum class NavigationType {
-    BOTTOM_NAVIGATION, NAVIGATION_RAIL, PERMANENT_NAVIGATION_DRAWER
+    /**
+     * Bottom navigation layout.
+     */
+    BOTTOM_NAVIGATION,
+
+    /**
+     * Navigation rail layout.
+     */
+    NAVIGATION_RAIL,
+
+    /**
+     * Permanent navigation drawer layout.
+     */
+    PERMANENT_NAVIGATION_DRAWER
 }

@@ -14,7 +14,13 @@ import dev.brampie.myandroidapplication.ui.FinalSpaceApp
 import dev.brampie.myandroidapplication.ui.components.NavigationType
 import dev.brampie.myandroidapplication.ui.theme.MyAndroidApplicationTheme
 
+/**
+ * The main activity of the Final Space app responsible for initializing and setting the content of the application.
+ */
 class MainActivity : ComponentActivity() {
+    /**
+     * Called when the activity is first created. Initializes the app theme and sets the content of the app based on the window size.
+     */
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

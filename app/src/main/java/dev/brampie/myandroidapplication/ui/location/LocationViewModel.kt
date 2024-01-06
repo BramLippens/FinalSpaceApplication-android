@@ -22,6 +22,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel responsible for managing location data and UI states.
+ *
+ * @property appRepository The [AppRepository] instance to fetch location data from.
+ */
 class LocationViewModel (
     private val appRepository: AppRepository
 ): ViewModel(){
@@ -34,6 +39,9 @@ class LocationViewModel (
     val uiState: StateFlow<LocationState> = _uiState.asStateFlow()
     lateinit var uiLocationListState: StateFlow<LocationListState>
 
+    /**
+     * Represents the current state of location data retrieval from the API.
+     */
     var locationApiState: ApiLocationState by mutableStateOf(ApiLocationState.Loading)
         private set
 
@@ -41,6 +49,9 @@ class LocationViewModel (
         getApiLocations()
     }
 
+    /**
+     * Fetch location data from the API and update the UI states accordingly.
+     */
     fun getApiLocations() {
         try{
             //Log.i("LocationViewModel", "getApiLocations: ")
@@ -59,6 +70,9 @@ class LocationViewModel (
 
     companion object{
         private var Instance: LocationViewModel? = null
+        /**
+         * Factory for creating instances of [LocationViewModel].
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if(Instance == null){
