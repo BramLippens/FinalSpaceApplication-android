@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 /**
  * ViewModel responsible for managing character data and UI states.
@@ -66,7 +67,7 @@ class CharacterViewModel (
                 )
             characterApiState = ApiCharacterState.Success
             //Log.i("CharacterViewModel", "getApiCharacters: success")
-        }catch (e: Exception){
+        }catch (e: IOException){
             Log.i("CharacterViewModel", "getApiCharacters: ${e.message}")
             characterApiState = ApiCharacterState.Error
         }

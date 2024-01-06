@@ -90,7 +90,8 @@ fun FinalSpaceApp(
                     }
                     composable(Destinations.Locations.name) {
                         LocationScreen(
-                            modifier = Modifier.padding(innerPadding)
+                            modifier = Modifier.padding(innerPadding),
+                            isLandscape = false
                         )
                     }
                     composable("${Destinations.CharacterDetail.name}/{id}") { backStackEntry ->
@@ -131,7 +132,7 @@ fun FinalSpaceApp(
                     }
                     composable(Destinations.Locations.name) {
                         LocationScreen(
-
+                            isLandscape = true
                         )
                     }
                     composable("${Destinations.CharacterDetail.name}/{id}") { backStackEntry ->

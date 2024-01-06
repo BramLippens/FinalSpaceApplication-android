@@ -19,6 +19,7 @@ import dev.brampie.myandroidapplication.network.location.ApiLocationState
 @Composable
 fun LocationScreen(
     modifier: Modifier = Modifier,
+    isLandscape: Boolean,
     locationViewModel: LocationViewModel = viewModel(factory = LocationViewModel.Factory)
 ) {
     val locationApiState = locationViewModel.locationApiState
@@ -34,7 +35,7 @@ fun LocationScreen(
         }
 
         is ApiLocationState.Success -> {
-            LocationList(uiLocationListState.locationList)
+            LocationList(uiLocationListState.locationList, isLandscape)
         }
     }
 }
