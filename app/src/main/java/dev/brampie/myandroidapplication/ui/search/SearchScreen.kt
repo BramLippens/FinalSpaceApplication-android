@@ -46,6 +46,7 @@ import dev.brampie.myandroidapplication.ui.search.SearchViewModel
 fun SearchScreen(
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    isLandscape: Boolean,
     searchViewModel: SearchViewModel = viewModel(factory = SearchViewModel.Factory)
 ) {
     val characterByName by searchViewModel.characterByName.collectAsState()
@@ -89,7 +90,7 @@ fun SearchScreen(
         }
 
         if (characterByName.isNotEmpty()) {
-            CharacterList(characters = characterByName, onCharacterClick = onClick)
+            CharacterList(characters = characterByName, isLandscape = isLandscape, onCharacterClick = onClick)
         } else {
             Text(
                 "No characters found",

@@ -105,7 +105,7 @@ fun FinalSpaceApp(
                         }
                     }
                     composable(Destinations.Search.name) {
-                        SearchScreen(onClick = goCharacterDetail, modifier = Modifier.padding(innerPadding))
+                        SearchScreen(onClick = goCharacterDetail, isLandscape = false, modifier = Modifier.padding(innerPadding))
                     }
                 }
             }
@@ -144,7 +144,7 @@ fun FinalSpaceApp(
                         }
                     }
                     composable(Destinations.Search.name) {
-                        SearchScreen(onClick = goCharacterDetail)
+                        SearchScreen(onClick = goCharacterDetail, isLandscape = true)
                     }
                 }
             }
