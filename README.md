@@ -8,6 +8,9 @@ De Final Space App is een Android-toepassing die fans van de populaire animaties
 ### Academiejaar: 2023 - 2024
 
 ---
+### Dokka
+In de zip dokka kan je documentatie vinden van dokka
+
 
 ### Technologieën en Bibliotheken
 Deze app is ontwikkeld met behulp van Kotlin en maakt gebruik van verschillende Android-bibliotheken en architecturele patronen, waaronder:
