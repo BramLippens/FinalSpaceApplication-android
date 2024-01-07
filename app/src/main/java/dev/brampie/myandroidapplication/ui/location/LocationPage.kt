@@ -36,7 +36,7 @@ fun LocationItem(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(8.dp)
             .width(400.dp),
         shape = RoundedCornerShape(12.dp),

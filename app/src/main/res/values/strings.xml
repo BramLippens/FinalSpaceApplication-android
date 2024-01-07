@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Final Space</string>
     <string name="go_to_characters">Characters</string>
-    <string name="go_to_home">Home</string>
     <string name="go_to_search">Search</string>
     <string name="error_loading_characters_from_api">Error while fetching characters</string>
     <string name="loading">Loading</string>
